@@ -12,7 +12,7 @@ public class ExampleSendService implements SendService {
 	public SentMessage sendNow(SendNowMessage message) {
 		ChatRoom room = message.getChatRoom();
 		
-		// TODO: IO が走る
+		// TODO: IO running
 		
 		var sentMessage = SentMessage.fromMessage(message, MessageSentTime.now()); 
 		room.addSentMessage(sentMessage);
