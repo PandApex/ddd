@@ -1,0 +1,81 @@
+@startuml
+class MessageScheduledTime {
+    - LocalDateTime scheduledTime
+    + LocalDateTime getScheduledTime()
+    + MessageScheduledTime(LocalDateTime scheduledTime)
+}
+
+class MessageSentTime {
+    - LocalDateTime sentTime
+    + LocalDateTime getSentTime()
+    + MessageSentTime(LocalDateTime sentTime)
+}
+
+class Member {
+    - String name
+    + String getName()
+}
+
+class ChatRoomName {
+    - String name
+    + String getName()
+}
+
+class ChatRoom {
+    - ChatRoomName name
+    - List<Member> members
+    - List<SentMessage> messages
+    + ChatRoomName getName()
+    + List<Member> getMembers()
+    + List<SentMessage> getMessages()
+    + ChatRoom(ChatRoomName name)
+    + void addMember(Member member)
+    + void removeMember(Member member)
+}
+
+ChatRoom "one" *-- "one" ChatRoomName
+ChatRoom "one" *-- "many" Member
+ChatRoom "one" *-- "many" SentMessage
+
+abstract class Message {
+    - MessageContent content
+    - Member sender
+    + MessageContent getContent()
+    + Member getSender()
+}
+
+class MessageContent {
+    - String text
+    + String getText()
+}
+
+
+class ScheduledMessage {
+    - MessageScheduledTime scheduledTime
+    + MessageScheduledTime getScheduledTime()
+
+    + void setContent(MessageContent newContent)
+    + void setScheduledTime(MessageScheduledTime newScheduledTime)
+}
+
+class SentMessage {
+    - MessageSentTime sentTime
+    + MessageSentTime getSentTime()
+}
+
+Message *-- MessageContent
+ScheduledMessage --|> Message
+SentMessage --|> Message
+ScheduledMessage *-- MessageScheduledTime
+SentMessage *-- MessageSentTime
+
+class Scheduler {
+    - List<ScheduledMessage> scheduledMessages
+    + List<ScheduledMessage> getScheduledMessages()
+
+    + void deleteScheduledMessage(ScheduledMessage message)
+    + void setScheduleTime(ScheduledMessage message, MessageScheduledTime newTime)
+}
+
+Scheduler "one" *-- "many" ScheduledMessage
+@endumlg
