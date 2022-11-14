@@ -8,6 +8,9 @@ public class ChatRoomName {
 	}
 	
 	public ChatRoomName(String name) {
+		if (name.length() > 10) {
+			throw new InvalidValueException("ChatRoomName.length must be <= 10");
+		}
 		this.name = name;
 	}
 }
