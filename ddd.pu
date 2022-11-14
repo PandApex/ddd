@@ -9,6 +9,7 @@ class MessageSentTime {
     - LocalDateTime sentTime
     + LocalDateTime getSentTime()
     + MessageSentTime(LocalDateTime sentTime)
+    + {static} MessageSentTime now()
 }
 
 class Member {
@@ -31,6 +32,7 @@ class ChatRoom {
     + ChatRoom(ChatRoomName name)
     + void addMember(Member member)
     + void removeMember(Member member)
+    + void addSentMessage(SentMessage sentMessage)
 }
 
 ChatRoom "one" *-- "one" ChatRoomName
@@ -38,17 +40,18 @@ ChatRoom "one" *-- "many" Member
 ChatRoom "one" *-- "many" SentMessage
 
 abstract class Message {
-    - MessageContent content
+    # MessageContent content
     - Member sender
+    - ChatRoom chatRoom
     + MessageContent getContent()
     + Member getSender()
+    + ChatRoom getChatRoom()
 }
 
 class MessageContent {
     - String text
     + String getText()
 }
-
 
 class ScheduledMessage {
     - MessageScheduledTime scheduledTime
@@ -58,16 +61,34 @@ class ScheduledMessage {
     + void setScheduledTime(MessageScheduledTime newScheduledTime)
 }
 
+interface SendService {
+    + void sendNow(SendNowMessage message)
+    + void sendLater(ScheduledMessage message)
+}
+
+abstract class SendableMessage {
+    + void {abstract} send(SendService scheduler)
+}
+
+class SendNowMessage {
+
+}
+
 class SentMessage {
     - MessageSentTime sentTime
     + MessageSentTime getSentTime()
+    + {static} SentMessage fromMessage(Message message, MessageSentTime sentTime)
 }
 
 Message *-- MessageContent
-ScheduledMessage --|> Message
+ScheduledMessage --|> SendableMessage
 SentMessage --|> Message
+SendableMessage --|> Message
+SendNowMessage --|> SendableMessage
 ScheduledMessage *-- MessageScheduledTime
 SentMessage *-- MessageSentTime
+
+SendableMessage -- SendService
 
 class Scheduler {
     - List<ScheduledMessage> scheduledMessages
@@ -75,6 +96,8 @@ class Scheduler {
 
     + void deleteScheduledMessage(ScheduledMessage message)
     + void setScheduleTime(ScheduledMessage message, MessageScheduledTime newTime)
+
+    + void scheduleMessage(ScheduledMessage message)
 }
 
 Scheduler "one" *-- "many" ScheduledMessage
