@@ -21,4 +21,20 @@ public class MessageSentTime {
 	public static MessageSentTime now() {
 		return new MessageSentTime(LocalDateTime.now());
 	}
+
+	@Override
+	public int hashCode() {
+		return sentTime.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof MessageSentTime)) {
+			return false;
+		}
+		MessageSentTime time = (MessageSentTime) obj;
+		return sentTime.equals(time);
+	}
+	
+	
 }

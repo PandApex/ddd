@@ -17,4 +17,20 @@ public class MessageScheduledTime {
 		
 		this.scheduledTime = scheduledTime;
 	}
+
+	@Override
+	public int hashCode() {
+		return scheduledTime.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof MessageScheduledTime)) {
+			return false;
+		}
+		MessageScheduledTime time = (MessageScheduledTime) obj;
+		return scheduledTime.equals(time.scheduledTime);
+	}
+	
+	
 }
