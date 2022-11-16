@@ -33,7 +33,7 @@ public class MessageSentTime {
 			return false;
 		}
 		MessageSentTime time = (MessageSentTime) obj;
-		return sentTime.equals(time);
+		return sentTime.equals(time.sentTime);
 	}
 	
 	
