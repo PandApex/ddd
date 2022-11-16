@@ -64,13 +64,13 @@ class ChatRoomTest {
         Member member2 = new Member("Apple Jack");
         chatRoom.addMember(member2);
 
-        var sentTimeDate1 = LocalDateTime.now().minusMinutes(5);
+        var sentTimeDate1 = LocalDateTime.now();
         SentMessage sentMessage1 = new SentMessage(member1, new MessageContent("Hello"), chatRoom, new MessageSentTime(sentTimeDate1));
         chatRoom.addSentMessage(sentMessage1);
         assertEquals(sentMessage1, chatRoom.getMessages().get(0));
         assertEquals(1, chatRoom.getMessages().size());
 
-        var sentTimeDate2 = LocalDateTime.now().minusMinutes(3);
+        var sentTimeDate2 = LocalDateTime.now();
         SentMessage sentMessage2 = new SentMessage(member2, new MessageContent("Hi"), chatRoom, new MessageSentTime(sentTimeDate2));
         chatRoom.addSentMessage(sentMessage2);
         assertEquals(sentMessage2, chatRoom.getMessages().get(1));
@@ -86,7 +86,7 @@ class ChatRoomTest {
         Member member = new Member("John Seed");
         chatRoom.addMember(member);
 
-        var sentTimeDate = LocalDateTime.now().minusMinutes(5);
+        var sentTimeDate = LocalDateTime.now();
         // Message for chatRoom2 not for expected chatRoom
         SentMessage sentMessage = new SentMessage(member, new MessageContent("Hello"), chatRoom2, new MessageSentTime(sentTimeDate));
         assertThrows(InvalidValueException.class, () -> {chatRoom.addSentMessage(sentMessage);});
