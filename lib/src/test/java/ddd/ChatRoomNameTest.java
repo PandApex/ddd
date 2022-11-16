@@ -18,8 +18,8 @@ class ChatRoomNameTest {
         String name = "DDD";
         ChatRoomName chatRoomName = new ChatRoomName(name);
 
-        // Should reach here
-        assertTrue(true);
+        // Should not throw exception
+        assertEquals(name, chatRoomName.getName());
     }
 
     @Test
@@ -27,8 +27,8 @@ class ChatRoomNameTest {
         String name = "1234567890";
         ChatRoomName chatRoomName = new ChatRoomName(name);
 
-        // Should reach here
-        assertTrue(true);
+        // Should not throw exception
+        assertEquals(name, chatRoomName.getName());
     }
 
     @Test
@@ -39,6 +39,10 @@ class ChatRoomNameTest {
 
     @Test
     void chatRoomNameWithEmoji() {
+        String name = "DDD😀";
+        ChatRoomName chatRoomName = new ChatRoomName(name);
 
+        // Should not throw exception
+        assertEquals(name, chatRoomName.getName());
     }
 }
