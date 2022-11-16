@@ -8,6 +8,9 @@ public class MessageContent {
 	}
 	
 	public MessageContent(String text) {
+		if (text.length() > 200) {
+			throw new InvalidValueException("MessageContent.length must be <= 200");
+		}
 		this.text = text;
 	}
 }

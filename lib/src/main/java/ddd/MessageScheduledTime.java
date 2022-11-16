@@ -12,7 +12,7 @@ public class MessageScheduledTime {
 	public MessageScheduledTime(LocalDateTime scheduledTime) {
 		LocalDateTime now = LocalDateTime.now();
 		if (scheduledTime.isBefore(now)) {
-			throw new RuntimeException("TODO");
+			throw new InvalidValueException("MessageScheduledTime must be in the future");
 		}
 		
 		this.scheduledTime = scheduledTime;

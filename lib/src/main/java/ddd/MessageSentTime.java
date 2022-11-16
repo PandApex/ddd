@@ -12,7 +12,7 @@ public class MessageSentTime {
 	public MessageSentTime(LocalDateTime sentTime) {
 		LocalDateTime now = LocalDateTime.now();
 		if (sentTime.isAfter(now)) {
-			throw new RuntimeException("TODO");
+			throw new InvalidValueException("MessageSentTime must be in the past");
 		}
 		
 		this.sentTime = sentTime;

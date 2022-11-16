@@ -1,11 +1,12 @@
 package ddd;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChatRoom {
-	private ChatRoomName name;
-	private List<Member> members;
-	private List<SentMessage> messages;
+	private final ChatRoomName name;
+	private final List<Member> members = new ArrayList<>();
+	private final List<SentMessage> messages = new ArrayList<>();
 	
 	public ChatRoom(ChatRoomName name) {
 		this.name = name;
@@ -32,6 +33,9 @@ public class ChatRoom {
 	}
 	
 	public void addSentMessage(SentMessage sentMessage) {
+		if (sentMessage.getChatRoom() != this) {
+			throw new InvalidValueException("SentMessage.chatRoom must be this room");
+		}
 		this.messages.add(sentMessage);
 	}
 }
