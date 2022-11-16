@@ -3,7 +3,7 @@ package ddd;
 public class InvalidValueException extends DDDException {
 
 	public InvalidValueException(String string) {
-		super(string)
+		super(string);
 	}
 
 	/**
