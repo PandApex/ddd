@@ -33,11 +33,38 @@ class SendNowMessageTest {
             SendNowMessage message = new SendNowMessage(sender, messageContent, chatRoom);
 
             SendService sendService = new ExampleSendService(new Scheduler());
-            SentMessage sentMessage = sendService.sendNow(message);
-            assertEquals(messageContent, sentMessage.getContent());
-            assertEquals(sender, sentMessage.getSender());
-            assertEquals(chatRoom, sentMessage.getChatRoom());
-            assertEquals(MessageSentTime.now(), sentMessage.getSentTime());
+            SendResult sendResult = message.send(sendService);
+            sendResult.addHandler(new SendResultHandler() {
+                @Override
+                public void onSendSuccess(SentMessage sentMessage) {
+                    assertEquals(messageContent, sentMessage.getContent());
+                    assertEquals(sender, sentMessage.getSender());
+                    assertEquals(chatRoom, sentMessage.getChatRoom());
+                    assertEquals(MessageSentTime.now(), sentMessage.getSentTime());
+                }
+
+                @Override
+                public void onSendFailure() {
+                    fail();
+                }
+            });
+
+        }
+    }
+
+    @Test
+    void messageSentByOutsider() {
+        try (MockedStatic<LocalDateTime> mock = Mockito.mockStatic(LocalDateTime.class, Mockito.CALLS_REAL_METHODS)) {
+            mock.when(LocalDateTime::now).thenReturn(mockDateTime);
+
+            ChatRoomName chatRoomName = new ChatRoomName("DDD");
+            ChatRoom chatRoom = new ChatRoom(chatRoomName);
+            // outsider does not belong to the chat room
+            Member outsider = new Member("Bobby");
+            MessageContent messageContent = new MessageContent("Spam message");
+            assertThrows(InvalidValueException.class, () -> {
+                SendNowMessage message = new SendNowMessage(outsider, messageContent, chatRoom);
+            });
         }
     }
 }

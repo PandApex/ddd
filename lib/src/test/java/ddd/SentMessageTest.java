@@ -14,10 +14,11 @@ class SentMessageTest {
         MessageContent content = new MessageContent("Hello World!");
         ChatRoomName chatRoomName = new ChatRoomName("Room #1");
         ChatRoom chatRoom = new ChatRoom(chatRoomName);
+        chatRoom.addMember(sender);
 
         var sentDateTime = LocalDateTime.now();
         MessageSentTime sentTime = new MessageSentTime(sentDateTime);
-        SentMessage sentMessage = new SentMessage(sender, content, chatRoom, sentTime);
+        SentMessage sentMessage =chatRoom.createSentMessage(sender, content, sentTime);
         assertEquals(sentTime, sentMessage.getSentTime());
     }
 
@@ -27,6 +28,7 @@ class SentMessageTest {
         MessageContent content = new MessageContent("Hello World!");
         ChatRoomName chatRoomName = new ChatRoomName("Room #1");
         ChatRoom chatRoom = new ChatRoom(chatRoomName);
+        chatRoom.addMember(sender);
 
         var sentDateTime = LocalDateTime.now();
         MessageSentTime sentTime = new MessageSentTime(sentDateTime);
@@ -44,6 +46,7 @@ class SentMessageTest {
         MessageContent content = new MessageContent("Hello World!");
         ChatRoomName chatRoomName = new ChatRoomName("Room #1");
         ChatRoom chatRoom = new ChatRoom(chatRoomName);
+        chatRoom.addMember(sender);
 
         var sentDateTime = LocalDateTime.now();
         MessageSentTime sentTime = new MessageSentTime(sentDateTime);

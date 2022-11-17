@@ -1,6 +1,10 @@
 package ddd;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -8,6 +12,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SchedulerTest {
+
+    private static final LocalDateTime mockDateTime = LocalDateTime.of(2022, 1, 1, 1, 0, 0);
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     void noScheduledMessage() {
@@ -128,5 +139,64 @@ class SchedulerTest {
             MessageContent newMessageContent2 = new MessageContent("Hello World");
             scheduler.setContent(unscheduledMessage, newMessageContent2);
         });
+    }
+    @Test
+    void messageSentByOutsider() {
+        try (MockedStatic<LocalDateTime> mock = Mockito.mockStatic(LocalDateTime.class, Mockito.CALLS_REAL_METHODS)) {
+            mock.when(LocalDateTime::now).thenReturn(mockDateTime);
+
+            ChatRoomName chatRoomName = new ChatRoomName("DDD");
+            ChatRoom chatRoom = new ChatRoom(chatRoomName);
+            // outsider does not belong to the chat room
+            Member outsider = new Member("Bobby");
+            MessageContent messageContent = new MessageContent("Spam message");
+            MessageScheduledTime messageScheduledTime = new MessageScheduledTime(mockDateTime.plusHours(1));
+            assertThrows(InvalidValueException.class, () -> {
+                ScheduledMessage message = new ScheduledMessage(outsider, messageContent, chatRoom, messageScheduledTime);
+            });
+        }
+    }
+
+    @Test
+    void sendScheduledMessage() {
+        try (MockedStatic<LocalDateTime> mock = Mockito.mockStatic(LocalDateTime.class, Mockito.CALLS_REAL_METHODS)) {
+            mock.when(LocalDateTime::now).thenReturn(mockDateTime);
+
+            ChatRoomName chatRoomName = new ChatRoomName("DDD");
+            ChatRoom chatRoom = new ChatRoom(chatRoomName);
+            Member sender = new Member("John Seed");
+            chatRoom.addMember(sender);
+            MessageContent messageContent = new MessageContent("Hello");
+            // Schedule message to be sent 10 seconds later
+            MessageScheduledTime messageScheduledTime = new MessageScheduledTime(mockDateTime.plusSeconds(10));
+            ScheduledMessage scheduledMessage = new ScheduledMessage(sender, messageContent, chatRoom, messageScheduledTime);
+            assertEquals(0, chatRoom.getMessages().size());
+
+            Scheduler scheduler = new Scheduler();
+            SendService sendService = new ExampleSendService(scheduler);
+            SendResult result = scheduledMessage.send(sendService);
+
+            assertEquals(1, scheduler.getScheduledMessages().size());
+            result.addHandler(new SendResultHandler() {
+                @Override
+                public void onSendSuccess(SentMessage sentMessage) {
+                    assertEquals(messageContent, sentMessage.getContent());
+                    assertEquals(sender, sentMessage.getSender());
+                    assertEquals(chatRoom, sentMessage.getChatRoom());
+                    assertEquals(MessageSentTime.now(), sentMessage.getSentTime());
+                }
+
+                @Override
+                public void onSendFailure() {
+                    fail();
+                }
+            });
+
+            // Set time now to 10 seconds later
+            mock.when(LocalDateTime::now).thenReturn(mockDateTime.plusSeconds(10));
+
+            // TODO
+//            assertEquals(0, scheduler.getScheduledMessages().size());
+        }
     }
 }

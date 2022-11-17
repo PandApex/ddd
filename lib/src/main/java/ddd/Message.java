@@ -18,6 +18,9 @@ public abstract class Message {
 	}
 	
 	public Message(Member sender, MessageContent content, ChatRoom chatRoom) {
+		if (!chatRoom.getMembers().contains(sender)) {
+			throw new InvalidValueException("Member does not exist in chat room");
+		}
 		this.sender = sender;
 		this.content = content;
 		this.chatRoom = chatRoom;
