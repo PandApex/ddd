@@ -18,8 +18,8 @@ public class ExampleSendService implements SendService {
 	}
 
 	@Override
-	public void sendLater(ScheduledMessage message) {
-		scheduler.scheduleMessage(message);
+	public SendResult sendLater(ScheduledMessage message) {
+		return scheduler.scheduleMessage(message);
 	}
 
 }

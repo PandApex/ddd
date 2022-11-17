@@ -7,8 +7,12 @@ public class SendNowMessage extends SendableMessage{
 	}
 
 	@Override
-	public void send(SendService sendService) {
-		sendService.sendNow(this);
+	public SendResult send(SendService sendService) {
+		var sentMessage = sendService.sendNow(this);
+		
+		var result = new SendResult();
+		result.messageSent(sentMessage);
+		return result;
 	}
 
 

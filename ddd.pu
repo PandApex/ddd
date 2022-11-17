@@ -67,7 +67,18 @@ interface SendService {
 }
 
 abstract class SendableMessage {
-    + void {abstract} send(SendService scheduler)
+    + SendResult {abstract} send(SendService scheduler)
+}
+
+class SendResult {
+    - List<SendResultHandler> handlers
+    + void addHandler(SendResultHandler handler)
+    + void removeHandler(SendResultHandler handler)
+}
+
+interface SendResultHandler {
+    + void onSendSuccess(SentMessage sentMessage)
+    + void onSendFailure()
 }
 
 class SendNowMessage {
@@ -87,6 +98,10 @@ SendableMessage --|> Message
 SendNowMessage --|> SendableMessage
 ScheduledMessage *-- MessageScheduledTime
 SentMessage *-- MessageSentTime
+
+SendableMessage -- SendResult
+SendResult .. SendResultHandler
+SendResultHandler .. SentMessage
 
 SendableMessage -- SendService
 

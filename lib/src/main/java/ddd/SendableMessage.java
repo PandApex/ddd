@@ -5,5 +5,5 @@ abstract public class SendableMessage extends Message {
 		super(sender, content, chatRoom);
 	}
 
-	abstract public void send(SendService sendService);
+	abstract public SendResult send(SendService sendService);
 }

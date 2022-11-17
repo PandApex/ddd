@@ -21,7 +21,7 @@ public class ScheduledMessage extends SendableMessage {
 	}
 
 	@Override
-	public void send(SendService sendService) {
-		sendService.sendLater(this);
+	public SendResult send(SendService sendService) {
+		return sendService.sendLater(this);
 	}
 }

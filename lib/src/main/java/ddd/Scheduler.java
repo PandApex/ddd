@@ -37,7 +37,10 @@ public class Scheduler {
 		return false;
 	}
 	
-	public void scheduleMessage(ScheduledMessage message) {
+	public SendResult scheduleMessage(ScheduledMessage message) {
 		scheduledMessages.add(message);
+		
+		var result = new SendResult();
+		return result;
 	}
 }
