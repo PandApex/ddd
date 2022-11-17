@@ -32,10 +32,15 @@ public class ChatRoom {
 		this.members.remove(member);
 	}
 	
-	public void addSentMessage(SentMessage sentMessage) {
-		if (sentMessage.getChatRoom() != this) {
-			throw new InvalidValueException("SentMessage.chatRoom must be this room");
-		}
-		this.messages.add(sentMessage);
+	public SentMessage createSentMessage(Member sender, MessageContent content, MessageSentTime sentTime) {
+		SentMessage message = new SentMessage(sender, content, this, sentTime);
+		this.messages.add(message);
+		return message;
+	}
+	
+	public SentMessage createSentMessage(Message message, MessageSentTime sentTime) {
+		SentMessage message = SentMessage.fromMessage(message, sentTime);
+		this.messages.add(message);
+		return message;
 	}
 }
