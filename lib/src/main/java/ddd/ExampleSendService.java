@@ -13,11 +13,8 @@ public class ExampleSendService implements SendService {
 		ChatRoom room = message.getChatRoom();
 		
 		// TODO: IO running
-		
-		var sentMessage = SentMessage.fromMessage(message, MessageSentTime.now()); 
-		room.addSentMessage(sentMessage);
-		
-		return sentMessage;
+
+		return room.createSentMessage(message, MessageSentTime.now());
 	}
 
 	@Override

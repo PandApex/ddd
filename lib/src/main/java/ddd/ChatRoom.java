@@ -39,8 +39,8 @@ public class ChatRoom {
 	}
 	
 	public SentMessage createSentMessage(Message message, MessageSentTime sentTime) {
-		SentMessage message = SentMessage.fromMessage(message, sentTime);
-		this.messages.add(message);
-		return message;
+		SentMessage sentMessage = SentMessage.fromMessage(message, sentTime);
+		this.messages.add(sentMessage);
+		return sentMessage;
 	}
 }
