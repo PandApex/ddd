@@ -54,7 +54,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (7/7)
+    (8/8)
   </span>
 </td>
 <td class="coverageStat">
@@ -62,7 +62,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (12/12)
+    (15/15)
   </span>
 </td>
 </tr>
@@ -108,11 +108,16 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;		this.members.remove(member);</b>
 &nbsp;	}
 &nbsp;	
-&nbsp;	public void addSentMessage(SentMessage sentMessage) {
-<b class="fc">&nbsp;		if (sentMessage.getChatRoom() != this) {</b>
-<b class="fc">&nbsp;			throw new InvalidValueException(&quot;SentMessage.chatRoom must be this room&quot;);</b>
-&nbsp;		}
+&nbsp;	public SentMessage createSentMessage(Member sender, MessageContent content, MessageSentTime sentTime) {
+<b class="fc">&nbsp;		SentMessage message = new SentMessage(sender, content, this, sentTime);</b>
+<b class="fc">&nbsp;		this.messages.add(message);</b>
+<b class="fc">&nbsp;		return message;</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	public SentMessage createSentMessage(Message message, MessageSentTime sentTime) {
+<b class="fc">&nbsp;		SentMessage sentMessage = SentMessage.fromMessage(message, sentTime);</b>
 <b class="fc">&nbsp;		this.messages.add(sentMessage);</b>
+<b class="fc">&nbsp;		return sentMessage;</b>
 &nbsp;	}
 &nbsp;}
 </code>
@@ -138,7 +143,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-11-16 16:18</div>
+    <div style="float:right;">generated on 2022-11-20 19:22</div>
 </div>
 </body>
 </html>

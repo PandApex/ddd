@@ -59,10 +59,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    77.8%
   </span>
   <span class="absValue">
-    (16/16)
+    (14/18)
   </span>
 </td>
 </tr>
@@ -92,14 +92,14 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;	
 &nbsp;	public void setScheduleTime(ScheduledMessage message, MessageScheduledTime newTime) {
 <b class="fc">&nbsp;		if (!hasMessage(message)) {</b>
-<b class="fc">&nbsp;			throw new InvalidValueException(&quot;Scheduler does not have this message&quot;);</b>
+<b class="nc">&nbsp;			throw new InvalidValueException(&quot;Scheduler does not have this message&quot;);</b>
 &nbsp;		}
 <b class="fc">&nbsp;		message.setScheduledTime(newTime);</b>
 &nbsp;	}
 &nbsp;
 &nbsp;	public void setContent(ScheduledMessage message, MessageContent newContent) {
 <b class="fc">&nbsp;		if (!hasMessage(message)) {</b>
-<b class="fc">&nbsp;			throw new InvalidValueException(&quot;Scheduler does not have this message&quot;);</b>
+<b class="nc">&nbsp;			throw new InvalidValueException(&quot;Scheduler does not have this message&quot;);</b>
 &nbsp;		}
 <b class="fc">&nbsp;		message.setContent(newContent);</b>
 &nbsp;	}
@@ -109,12 +109,15 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;			if (msg.equals(message)) {</b>
 <b class="fc">&nbsp;				return true;</b>
 &nbsp;			}
-<b class="fc">&nbsp;		}</b>
-<b class="fc">&nbsp;		return false;</b>
+<b class="nc">&nbsp;		}</b>
+<b class="nc">&nbsp;		return false;</b>
 &nbsp;	}
 &nbsp;	
-&nbsp;	public void scheduleMessage(ScheduledMessage message) {
+&nbsp;	public SendResult scheduleMessage(ScheduledMessage message) {
 <b class="fc">&nbsp;		scheduledMessages.add(message);</b>
+&nbsp;		
+<b class="fc">&nbsp;		var result = new SendResult();</b>
+<b class="fc">&nbsp;		return result;</b>
 &nbsp;	}
 &nbsp;}
 </code>
@@ -140,7 +143,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-11-16 16:18</div>
+    <div style="float:right;">generated on 2022-11-20 19:22</div>
 </div>
 </body>
 </html>

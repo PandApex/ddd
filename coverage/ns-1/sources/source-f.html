@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > SendableMessage</title>
+  <title>Coverage Report > SendResult</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">ddd</a>
 </div>
 
-<h1>Coverage Summary for Class: SendableMessage (ddd)</h1>
+<h1>Coverage Summary for Class: SendResult (ddd)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -40,7 +40,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">SendableMessage</td>
+  <td class="name">SendResult</td>
 <td class="coverageStat">
   <span class="percent">
     100%
@@ -51,18 +51,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    60%
   </span>
   <span class="absValue">
-    (1/1)
+    (3/5)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    71.4%
   </span>
   <span class="absValue">
-    (1/1)
+    (10/14)
   </span>
 </td>
 </tr>
@@ -76,12 +76,38 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package ddd;
 &nbsp;
-&nbsp;abstract public class SendableMessage extends Message {
-&nbsp;	public SendableMessage(Member sender, MessageContent content, ChatRoom chatRoom) {
-<b class="fc">&nbsp;		super(sender, content, chatRoom);</b>
-&nbsp;	}
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
 &nbsp;
-&nbsp;	abstract public void send(SendService sendService);
+<b class="fc">&nbsp;public class SendResult {</b>
+<b class="fc">&nbsp;	private List&lt;SendResultHandler&gt; handlers = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;	private SentMessage sentMessage = null;</b>
+<b class="fc">&nbsp;	private boolean failed = false;</b>
+&nbsp;	
+&nbsp;	public void addHandler(SendResultHandler handler) {
+<b class="fc">&nbsp;		handlers.add(handler);</b>
+&nbsp;		
+<b class="fc">&nbsp;		if (sentMessage != null) {</b>
+<b class="fc">&nbsp;			handler.onSendSuccess(sentMessage);</b>
+&nbsp;		}
+<b class="fc">&nbsp;		if (failed) {</b>
+<b class="nc">&nbsp;			handler.onSendFailure();</b>
+&nbsp;		}
+&nbsp;	}
+&nbsp;	
+&nbsp;	public void removeHandler(SendResultHandler handler) {
+<b class="nc">&nbsp;		handlers.remove(handler);</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	void messageSent(SentMessage sentMessage) {
+<b class="fc">&nbsp;		handlers.forEach(h -&gt; h.onSendSuccess(sentMessage));</b>
+<b class="fc">&nbsp;		this.sentMessage = sentMessage;</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	void fail() {
+<b class="nc">&nbsp;		handlers.forEach(h -&gt; h.onSendFailure());</b>
+<b class="nc">&nbsp;		failed = true;</b>
+&nbsp;	}
 &nbsp;}
 </code>
 </pre>
@@ -106,7 +132,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-11-16 16:18</div>
+    <div style="float:right;">generated on 2022-11-20 19:22</div>
 </div>
 </body>
 </html>

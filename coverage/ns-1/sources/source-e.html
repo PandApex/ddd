@@ -51,18 +51,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    50%
+    100%
   </span>
   <span class="absValue">
-    (1/2)
+    (2/2)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    50%
+    100%
   </span>
   <span class="absValue">
-    (1/2)
+    (5/5)
   </span>
 </td>
 </tr>
@@ -83,8 +83,12 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;	}
 &nbsp;
 &nbsp;	@Override
-&nbsp;	public void send(SendService sendService) {
-<b class="nc">&nbsp;		sendService.sendNow(this);</b>
+&nbsp;	public SendResult send(SendService sendService) {
+<b class="fc">&nbsp;		var sentMessage = sendService.sendNow(this);</b>
+&nbsp;		
+<b class="fc">&nbsp;		var result = new SendResult();</b>
+<b class="fc">&nbsp;		result.messageSent(sentMessage);</b>
+<b class="fc">&nbsp;		return result;</b>
 &nbsp;	}
 &nbsp;
 &nbsp;
@@ -112,7 +116,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-11-16 16:18</div>
+    <div style="float:right;">generated on 2022-11-20 19:22</div>
 </div>
 </body>
 </html>

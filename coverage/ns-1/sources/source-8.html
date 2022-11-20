@@ -62,7 +62,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (7/7)
+    (9/9)
   </span>
 </td>
 </tr>
@@ -94,6 +94,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;	}
 &nbsp;	
 <b class="fc">&nbsp;	public Message(Member sender, MessageContent content, ChatRoom chatRoom) {</b>
+<b class="fc">&nbsp;		if (!chatRoom.getMembers().contains(sender)) {</b>
+<b class="fc">&nbsp;			throw new InvalidValueException(&quot;Member does not exist in chat room&quot;);</b>
+&nbsp;		}
 <b class="fc">&nbsp;		this.sender = sender;</b>
 <b class="fc">&nbsp;		this.content = content;</b>
 <b class="fc">&nbsp;		this.chatRoom = chatRoom;</b>
@@ -122,7 +125,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-11-16 16:18</div>
+    <div style="float:right;">generated on 2022-11-20 19:22</div>
 </div>
 </body>
 </html>

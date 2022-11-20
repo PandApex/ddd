@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > SendService</title>
+  <title>Coverage Report > SentMessage</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,14 +21,50 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">ddd</a>
 </div>
 
-<h1>Coverage Summary for Class: SendService (ddd)</h1>
+<h1>Coverage Summary for Class: SentMessage (ddd)</h1>
 
 <table class="coverageStats">
 <tr>
   <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
 </tr>
 <tr>
-  <td class="name">SendService</td>
+  <td class="name">SentMessage</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
 </tr>
 
 </table>
@@ -40,9 +76,22 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package ddd;
 &nbsp;
-&nbsp;public interface SendService {
-&nbsp;	SentMessage sendNow(SendNowMessage message);
-&nbsp;	void sendLater(ScheduledMessage message);
+&nbsp;public class SentMessage extends Message{
+&nbsp;	private MessageSentTime sentTime;
+&nbsp;
+&nbsp;	SentMessage(Member sender, MessageContent content, ChatRoom chatRoom, MessageSentTime sentTime) {
+<b class="fc">&nbsp;		super(sender, content, chatRoom);</b>
+<b class="fc">&nbsp;		this.sentTime = sentTime;</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	public MessageSentTime getSentTime() {
+<b class="fc">&nbsp;		return sentTime;</b>
+&nbsp;	}
+&nbsp;	
+&nbsp;	static SentMessage fromMessage(Message message, MessageSentTime sentTime) {
+<b class="fc">&nbsp;		return new SentMessage(message.getSender(), message.getContent(), message.getChatRoom(),sentTime);</b>
+&nbsp;	}
+&nbsp;
 &nbsp;}
 </code>
 </pre>
@@ -67,7 +116,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-11-16 16:18</div>
+    <div style="float:right;">generated on 2022-11-20 19:22</div>
 </div>
 </body>
 </html>

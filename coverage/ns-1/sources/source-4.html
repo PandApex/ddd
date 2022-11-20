@@ -43,26 +43,26 @@ Current scope:     <a href="../../index.html">all classes</a>
   <td class="name">ExampleSendService</td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    100%
   </span>
   <span class="absValue">
-    (0/1)
+    (1/1)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    100%
   </span>
   <span class="absValue">
-    (0/3)
+    (3/3)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    100%
   </span>
   <span class="absValue">
-    (0/7)
+    (5/5)
   </span>
 </td>
 </tr>
@@ -80,25 +80,22 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;	
 &nbsp;	private Scheduler scheduler;
 &nbsp;	
-<b class="nc">&nbsp;	public ExampleSendService(Scheduler scheduler) {</b>
-<b class="nc">&nbsp;		this.scheduler=scheduler;</b>
+<b class="fc">&nbsp;	public ExampleSendService(Scheduler scheduler) {</b>
+<b class="fc">&nbsp;		this.scheduler=scheduler;</b>
 &nbsp;	}
 &nbsp;
 &nbsp;	@Override
 &nbsp;	public SentMessage sendNow(SendNowMessage message) {
-<b class="nc">&nbsp;		ChatRoom room = message.getChatRoom();</b>
+<b class="fc">&nbsp;		ChatRoom room = message.getChatRoom();</b>
 &nbsp;		
 &nbsp;		// TODO: IO running
-&nbsp;		
-<b class="nc">&nbsp;		var sentMessage = SentMessage.fromMessage(message, MessageSentTime.now()); </b>
-<b class="nc">&nbsp;		room.addSentMessage(sentMessage);</b>
-&nbsp;		
-<b class="nc">&nbsp;		return sentMessage;</b>
+&nbsp;
+<b class="fc">&nbsp;		return room.createSentMessage(message, MessageSentTime.now());</b>
 &nbsp;	}
 &nbsp;
 &nbsp;	@Override
-&nbsp;	public void sendLater(ScheduledMessage message) {
-<b class="nc">&nbsp;		scheduler.scheduleMessage(message);</b>
+&nbsp;	public SendResult sendLater(ScheduledMessage message) {
+<b class="fc">&nbsp;		return scheduler.scheduleMessage(message);</b>
 &nbsp;	}
 &nbsp;
 &nbsp;}
@@ -125,7 +122,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-11-16 16:18</div>
+    <div style="float:right;">generated on 2022-11-20 19:22</div>
 </div>
 </body>
 </html>
